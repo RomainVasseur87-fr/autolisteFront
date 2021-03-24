@@ -1,0 +1,11 @@
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.flex-container * {
+    width: 30vw;
+    margin-top: 2vh;
+    cursor: pointer;
+}

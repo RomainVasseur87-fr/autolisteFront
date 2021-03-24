@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Panier } from '../models/panier';
+import { PanierService } from '../services/panier.service';
 
 @Component({
   selector: 'app-mes-paniers-page',
@@ -7,9 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MesPaniersPageComponent implements OnInit {
 
-  constructor() { }
+  paniers!: Panier[];
+
+  constructor(private panApi: PanierService) { }
 
   ngOnInit(): void {
+    this.panApi.getPaniers().subscribe((paniers: Panier[])=>{
+      this.paniers = paniers;
+      console.log(paniers);
+    },
+    (err:any)=>{
+      console.error(err);
+    });
   }
 
 }

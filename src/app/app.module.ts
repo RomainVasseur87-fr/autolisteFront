@@ -11,6 +11,10 @@ import { MesRecettesPageComponent } from './mes-recettes-page/mes-recettes-page.
 import { MesPaniersPageComponent } from './mes-paniers-page/mes-paniers-page.component';
 import { MesCommandesPageComponent } from './mes-commandes-page/mes-commandes-page.component';
 import { ConnexionPageComponent } from './connexion-page/connexion-page.component';
+import { UtilisateurPageComponent } from './utilisateur-page/utilisateur-page.component';
+import { UtilisateurComponent } from './utilisateur-page/utilisateur/utilisateur.component';
+import { RecetteComponent } from './mes-recettes-page/recette/recette.component';
+import { PanierComponent } from './mes-paniers-page/panier/panier.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +25,11 @@ import { ConnexionPageComponent } from './connexion-page/connexion-page.componen
     MesRecettesPageComponent,
     MesPaniersPageComponent,
     MesCommandesPageComponent,
-    ConnexionPageComponent
+    ConnexionPageComponent,
+    UtilisateurPageComponent,
+    UtilisateurComponent,
+    RecetteComponent,
+    PanierComponent
   ],
   imports: [
     BrowserModule,

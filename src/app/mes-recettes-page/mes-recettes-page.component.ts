@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Recette } from '../models/recette';
+import { RecetteService } from '../services/recette.service';
 
 @Component({
   selector: 'app-mes-recettes-page',
@@ -7,9 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MesRecettesPageComponent implements OnInit {
 
-  constructor() { }
+  recettes!: Recette[];
+
+  constructor(private recApi: RecetteService) { }
 
   ngOnInit(): void {
+    this.recApi.getRecettes().subscribe((recettes: Recette[])=>{
+      this.recettes = recettes;
+      console.log(recettes);
+    },
+    (err:any)=>{
+      console.error(err);
+    });
   }
 
 }
