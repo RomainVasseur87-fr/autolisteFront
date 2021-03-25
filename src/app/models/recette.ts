@@ -3,6 +3,7 @@ import { Produit } from "./produit";
 import { Theme } from "./theme";
 
 export interface Recette {
+    
     id:number,
     version:number,
     nom: string,
