@@ -5,10 +5,11 @@ import { Role } from "./role";
 
 export interface Utilisateur {
 
-    username: string,
-    password: string,
-    enable: boolean,
-    role: Role,
+    id: number;
+    nom: string,
+    prenom: string,
+    email: string,
+    type: Role,
     adresse: Adresse,
     recettes: Recette[],
    

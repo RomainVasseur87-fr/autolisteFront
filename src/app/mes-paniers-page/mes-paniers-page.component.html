@@ -1,1 +1,5 @@
-<p>mes-paniers-page works!</p>
+<h2>Mes Paniers</h2>
+
+<div *ngIf="paniers" class="flex-container">
+    <app-panier *ngFor="let panier of paniers" [panier]="panier"></app-panier>
+</div>

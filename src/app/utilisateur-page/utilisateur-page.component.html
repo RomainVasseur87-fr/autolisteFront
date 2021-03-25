@@ -1,2 +1,6 @@
 <app-header></app-header>
-<p>utilisateur-page works!</p>
+<h2>Mes Utilisateurs</h2>
+
+<div *ngIf="utilisateurs" class="flex-container">
+    <app-utilisateur *ngFor="let utilisateur of utilisateurs" [utilisateur]="utilisateur"></app-utilisateur>
+</div>

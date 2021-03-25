@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Adresse } from 'src/app/models/adresse';
 
 @Component({
   selector: 'app-adresse',
@@ -7,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdresseComponent implements OnInit {
 
+  @Input() adresse! : Adresse;
+  
   constructor() { }
 
   ngOnInit(): void {

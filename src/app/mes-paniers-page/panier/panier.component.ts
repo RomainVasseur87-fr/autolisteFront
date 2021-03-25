@@ -9,6 +9,7 @@ import { Panier } from 'src/app/models/panier';
 export class PanierComponent implements OnInit {
 
   @Input() panier!: Panier;
+  
   constructor() { }
 
   ngOnInit(): void {
