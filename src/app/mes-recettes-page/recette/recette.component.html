@@ -1,0 +1,11 @@
+<div [routerLink]="'/recettes/'+ recette.id">
+    <ul>
+        <li class="recette-nom">{{recette.nom}}</li>
+        <li class="recette-theme"> themes : {{recette.themes}}</li>
+        <li>id: {{recette.id}}</li>
+        <li>prévues pour : {{recette.nbConvives}} personnes</li>
+        <li class="recette-body">{{recette.produits | slice:0:50}}...</li>
+        <li class="recette-body">preparations :</li>
+        <li class="recette-body">{{recette.process.description | slice:0:50}}</li>
+    </ul>
+</div>

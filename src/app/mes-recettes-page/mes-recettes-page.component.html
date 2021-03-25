@@ -1,0 +1,5 @@
+<h2>Mes recettes</h2>
+
+<div *ngIf="recettes" class="flex-container">
+    <app-recette *ngFor="let recette of recettes" [recette]="recette"></app-recette>
+</div>

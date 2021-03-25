@@ -1,0 +1,5 @@
+<h2>Mes commandes</h2>
+
+<div *ngIf="commandes" class="flex-container">
+    <app-commande *ngFor="let commande of commandes" [commande]="commande"></app-commande>
+</div>
