@@ -16,6 +16,8 @@ import { UtilisateurComponent } from './utilisateur-page/utilisateur/utilisateur
 import { RecetteComponent } from './mes-recettes-page/recette/recette.component';
 import { PanierComponent } from './mes-paniers-page/panier/panier.component';
 import { CommandeComponent } from './mes-commandes-page/commande/commande.component';
+import { UtilisateurFormComponent } from './utilisateur-page/utilisateur-form/utilisateur-form.component';
+import { ProduitComponent } from './produit/produit.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,8 @@ import { CommandeComponent } from './mes-commandes-page/commande/commande.compon
     ConnexionPageComponent,
     UtilisateurPageComponent,
     UtilisateurComponent,
+    UtilisateurFormComponent,
+    ProduitComponent,
     
     
     
