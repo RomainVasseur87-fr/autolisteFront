@@ -18,5 +18,18 @@ export class UtilisateurService {
   };
   getUtilisateur(id:number) : Observable<Utilisateur> {
     return this.http.get<Utilisateur>(`${this.route}/${id}`)
-  }
+  };
+  getUtilisateursByNom(nom:string) : Observable<Utilisateur[]> {
+    return this.http.get<Utilisateur[]>(`${this.route}/nom/${nom}`)
+  };
+  getUtilisateursByPrenom(prenom:string) : Observable<Utilisateur[]> {
+    return this.http.get<Utilisateur[]>(`${this.route}/prenom/${prenom}`)
+  };
+  getUtilisateursByAdresse(id:number) : Observable<Utilisateur[]> {
+    return this.http.get<Utilisateur[]>(`${this.route}/adresse/${id}`)
+  };
+  getUtilisateursByRecette(id:number) : Observable<Utilisateur[]> {
+    return this.http.get<Utilisateur[]>(`${this.route}/recette/${id}`)
+  };
+
 }

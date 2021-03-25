@@ -18,5 +18,19 @@ export class ThemeService {
   };
   getTheme(id:number) : Observable<Theme> {
     return this.http.get<Theme>(`${this.route}/${id}`)
-  }
+  };
+  getThemesByNom(nom:string) : Observable<Theme[]> {
+    return this.http.get<Theme[]>(`${this.route}/nom/${nom}`)
+  };
+  saveTheme(theme:Theme): Observable<Theme> {
+    return this.http.post<Theme>(`${this.route}`,theme)
+  };
+
+  updateTheme(id: number,theme:Theme): Observable<Theme> {
+    return this.http.put<Theme>(`${this.route}/${id}`,theme)
+  };
+
+  deleteTheme(id:number):Observable<Theme> {
+    return this.http.delete<Theme>(`${this.route}/${id}`)
+  };
 }

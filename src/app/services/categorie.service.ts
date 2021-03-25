@@ -18,5 +18,19 @@ export class CategorieService {
   };
   getCategorie(id:number) : Observable<Categorie> {
     return this.http.get<Categorie>(`${this.route}/${id}`)
-  }
+  };
+  getCategoriesByNom(nom: string) : Observable<Categorie[]> {
+    return this.http.get<Categorie[]>(`${this.route}/nom/${nom}`)
+  };
+  saveCategorie(categorie:Categorie): Observable<Categorie> {
+    return this.http.post<Categorie>(`${this.route}`,categorie)
+  };
+
+  updateCategorie(id: number,categorie:Categorie): Observable<Categorie> {
+    return this.http.put<Categorie>(`${this.route}/${id}`, categorie)
+  };
+
+  deleteCategorie(id:number):Observable<Categorie> {
+    return this.http.delete<Categorie>(`${this.route}/${id}`)
+  };
 }
