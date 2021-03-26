@@ -1,0 +1,131 @@
+import { Component, OnInit, Input } from '@angular/core';
+import { ConfirmationService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
+import { Recette } from '../models/recette';
+import { RecetteService } from '../services/recette.service';
+
+@Component({
+  selector: 'app-test-composant',
+  templateUrl: './test-composant.component.html',
+  styles: [`
+        :host ::ng-deep .p-dialog .recette-image {
+            width: 150px;
+            margin: 0 auto 2rem auto;
+            display: block;
+        }
+    `],
+  styleUrls: ['./test-composant.component.css']
+})
+export class TestComposantComponent implements OnInit {
+
+  recetteDialog: boolean = false;
+
+  recettes!: Recette[];
+  recettesResult!: Recette[];
+
+  recette!: Recette;
+
+  selectedRecettes!: Recette[];
+
+  submitted: boolean = false;
+
+  statuses!: any;
+
+  constructor(private recetteService: RecetteService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
+
+  ngOnInit() {
+    this.recetteService.getRecettes().subscribe(data => {
+      this.recettes = data;
+      this.recettesResult = data;
+    });
+
+    this.statuses = [
+      { label: 'INSTOCK', value: 'instock' },
+      { label: 'LOWSTOCK', value: 'lowstock' },
+      { label: 'OUTOFSTOCK', value: 'outofstock' }
+    ];
+  }
+
+  openNew() {
+    this.recette = <Recette>{};
+    this.submitted = false;
+    this.recetteDialog = true;
+  }
+
+  deleteSelectedRecettes() {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete the selected products?',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.recettes = this.recettes.filter(val => !this.selectedRecettes.includes(val));
+        this.selectedRecettes = [];
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
+      }
+    });
+  }
+  editRecette(recette: Recette) {
+    this.recette = { ...recette };
+    this.recetteDialog = true;
+    this.recetteService.updateRecette(this.recette.id, recette).subscribe(resp => {
+      this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Recette mise à jour', life: 3000 });
+      console.log(resp);
+    });
+  }
+
+  deleteRecette(recette: Recette) {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete ' + recette.nom + '?',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.recettes = this.recettes.filter(val => val.id !== recette.id);
+        this.recette = <Recette>{};
+        this.recetteService.deleteRecette(this.recette.id);
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Recette supprimée', life: 3000 });
+      }
+    });
+  }
+
+  hideDialog() {
+    this.recetteDialog = false;
+    this.submitted = false;
+  }
+  saveRecette() {
+    this.submitted = true;
+
+    if (this.recette.nom.trim()) {
+      if (this.recette.id) {
+        this.recettes[this.findIndexById(this.recette.id.toString())] = this.recette;
+        this.recetteService.updateRecette(this.recette.id, this.recette);
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Recette Updated', life: 3000 });
+      }
+      else {
+        this.recetteService.saveRecette(this.recette);
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Recette Created', life: 3000 });
+      }
+
+      this.recettes = [...this.recettes];
+      this.recetteDialog = false;
+      this.recette = <Recette>{};
+    }
+  }
+  findIndexById(id: string): number {
+    let index = -1;
+    for (let i = 0; i < this.recettes.length; i++) {
+      if (this.recettes[i].id.toString() === id) {
+        index = i;
+        break;
+      }
+    }
+
+    return index;
+  }
+
+  filtree(event: any) {
+    this.recettes = this.recettesResult.filter(recette => recette.nom.includes(event.target.value));
+  }
+
+}
+
+

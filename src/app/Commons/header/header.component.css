@@ -1,7 +1,7 @@
 /* Add a black background color to the top navigation */
 
 .topnav {
-    background-color: rgb(69, 228, 117);
+    background-color: rgb(186, 228, 69);
     overflow: hidden;
 }
 
@@ -21,7 +21,7 @@
 /* Change the color of links on hover */
 
 .topnav a:hover {
-    background-color: rgb(164, 247, 247);
+    background-color: rgb(164, 247, 171);
     color: rgb(7, 7, 7);
 }
 
@@ -29,6 +29,6 @@
 /* Add a color to the active/current link */
 
 .topnav a.active {
-    background-color: #64be67;
+    background-color: #86c58a;
     color: rgb(0, 0, 0);
 }

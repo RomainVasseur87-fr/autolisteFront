@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AcceuilPageComponent } from './acceuil-page/acceuil-page.component';
+import { AccueilPageComponent } from './accueil-page/accueil-page.component';
 import { ConnexionPageComponent } from './connexion-page/connexion-page.component';
 import { CommandeComponent } from './mes-commandes-page/commande/commande.component';
 import { MesCommandesPageComponent } from './mes-commandes-page/mes-commandes-page.component';
@@ -13,7 +13,7 @@ import { UtilisateurPageComponent } from './utilisateur-page/utilisateur-page.co
 
 const routes: Routes = [
 
-  {path:'', component: AcceuilPageComponent, pathMatch:'full'},
+  {path:'', component: AccueilPageComponent, pathMatch:'full'},
   {path:'utilisateur/:id', component: UtilisateurPageComponent, pathMatch:'full'},
   {path:'mesRecettes', component: MesRecettesPageComponent, pathMatch:'full'},
   {path:'mesRecettes/:id', component: RecetteComponent, pathMatch:'full'},
