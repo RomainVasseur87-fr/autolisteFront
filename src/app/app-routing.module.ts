@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AccueilPageComponent } from './accueil-page/accueil-page.component';
 import { ConnexionPageComponent } from './connexion-page/connexion-page.component';
+import { GeolocalisationPageComponent } from './geolocalisation-page/geolocalisation-page.component';
+import { InspirationPageComponent } from './inspiration-page/inspiration-page.component';
 import { CommandeComponent } from './mes-commandes-page/commande/commande.component';
 import { MesCommandesPageComponent } from './mes-commandes-page/mes-commandes-page.component';
 import { MesPaniersPageComponent } from './mes-paniers-page/mes-paniers-page.component';
@@ -22,6 +24,8 @@ const routes: Routes = [
   {path:'mesCommandes', component: MesCommandesPageComponent, pathMatch:'full'},
   {path:'mesCommandes/:id', component: CommandeComponent, pathMatch:'full'},
   {path:'connexion', component: ConnexionPageComponent, pathMatch:'full'},
+  {path:'inspiration', component: InspirationPageComponent, pathMatch:'full'},
+  {path:'geolocalisation', component: GeolocalisationPageComponent, pathMatch:'full'},
 ];
 
 @NgModule({

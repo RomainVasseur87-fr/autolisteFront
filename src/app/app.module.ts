@@ -42,6 +42,9 @@ import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RecetteService } from './services/recette.service';
+import { MesPaniersListComponent } from './mes-paniers-page/mes-paniers-list/mes-paniers-list.component';
+import { InspirationPageComponent } from './inspiration-page/inspiration-page.component';
+import { GeolocalisationPageComponent } from './geolocalisation-page/geolocalisation-page.component';
 
 
 
@@ -63,6 +66,10 @@ import { RecetteService } from './services/recette.service';
     UtilisateurFormComponent,
     ProduitComponent,
     TestComposantComponent,
+    MesPaniersListComponent,
+    InspirationPageComponent,
+    GeolocalisationPageComponent
+  
 
   ],
   imports: [

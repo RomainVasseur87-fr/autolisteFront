@@ -1,7 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
+import { Produit } from '../models/produit';
+import { Process } from '../models/process';
 import { Recette } from '../models/recette';
+import { Theme } from '../models/theme';
 import { RecetteService } from '../services/recette.service';
 
 @Component({
@@ -23,7 +26,16 @@ export class TestComposantComponent implements OnInit {
   recettes!: Recette[];
   recettesResult!: Recette[];
 
-  recette!: Recette;
+  recette: Recette = <Recette>{
+    id: 0,
+    version: 0,
+    nom: "",
+    nbConvives: 0,
+    process: <Process>{},
+    produits: [],
+    themes: [],
+    image: <File>{},
+  };
 
   selectedRecettes!: Recette[];
 
@@ -40,9 +52,9 @@ export class TestComposantComponent implements OnInit {
     });
 
     this.statuses = [
-      { label: 'INSTOCK', value: 'instock' },
-      { label: 'LOWSTOCK', value: 'lowstock' },
-      { label: 'OUTOFSTOCK', value: 'outofstock' }
+      { label: 'PLAT VEGETARIEN', value: 'plat végétatrien' },
+      { label: 'ENTREE', value: 'enrée' },
+      { label: 'DESERT', value: 'desert' }
     ];
   }
 
@@ -59,13 +71,18 @@ export class TestComposantComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.recettes = this.recettes.filter(val => !this.selectedRecettes.includes(val));
+        this.recettes.forEach(recette => {
+          this.recetteService.deleteRecette(recette.id).subscribe(resp => {
+            console.log(resp);
+          });
+        })
         this.selectedRecettes = [];
         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
       }
     });
   }
   editRecette(recette: Recette) {
-    this.recette = { ...recette };
+    this.recette = recette;
     this.recetteDialog = true;
     this.recetteService.updateRecette(this.recette.id, recette).subscribe(resp => {
       this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Recette mise à jour', life: 3000 });
@@ -81,8 +98,11 @@ export class TestComposantComponent implements OnInit {
       accept: () => {
         this.recettes = this.recettes.filter(val => val.id !== recette.id);
         this.recette = <Recette>{};
-        this.recetteService.deleteRecette(this.recette.id);
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Recette supprimée', life: 3000 });
+        this.recetteService.deleteRecette(recette.id).subscribe(resp => {
+          console.log(resp);
+          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Recette supprimée', life: 3000 });
+        });
+
       }
     });
   }

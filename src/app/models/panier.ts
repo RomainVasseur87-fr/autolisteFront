@@ -5,4 +5,5 @@ export interface Panier {
     version:number,
     nom: string,
     produits: Produit[],
+    date:Date,
 }

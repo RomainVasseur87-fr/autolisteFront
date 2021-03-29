@@ -11,4 +11,5 @@ export interface Recette {
     process: Process,
     produits:Produit[],
     themes:Theme[],
+    image?: File,
 }

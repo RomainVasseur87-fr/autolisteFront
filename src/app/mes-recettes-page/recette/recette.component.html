@@ -4,8 +4,8 @@
         <li class="recette-theme"> themes : {{recette.themes}}</li>
         <li>id: {{recette.id}}</li>
         <li>prévues pour : {{recette.nbConvives}} personnes</li>
-        <li class="recette-body">{{recette.produits | slice:0:50}}...</li>
+        <li class="recette-body">{{recette.produits}}...</li>
         <li class="recette-body">preparations :</li>
-        <li class="recette-body">{{recette.process.description | slice:0:50}}</li>
+        <li class="recette-body">{{recette.process.description}}</li>
     </ul>
 </div>

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -33,7 +33,8 @@ export class PanierService {
     return this.http.put<Panier>(`${this.route}/${id}`,panier)
   };
 
-  deletePanier(id:number):Observable<Panier> {
-    return this.http.delete<Panier>(`${this.route}/${id}`)
+  deletePanier(id:number): Observable<HttpResponse<Panier>> {
+    console.warn('Suppression de ' + id);
+    return this.http.delete<Panier>(`${this.route}/${id}`, {observe: 'response'})
   };
 }
