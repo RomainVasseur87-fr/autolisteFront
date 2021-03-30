@@ -1,0 +1,15 @@
+.bg-img {
+    background-color: papayawhip;
+    height: 250vh;
+    background-position: top;
+    background-image: url(../assets/img/etale_fruits_et_legumes.jpg);
+    background-repeat: no-repeat;
+    opacity: 0.4;
+    z-index: -1;
+}
+
+.content {
+    position: absolute;
+    z-index: 1;
+    top: 12%;
+}
