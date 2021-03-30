@@ -39,14 +39,18 @@ export class MesPaniersListComponent implements OnInit {
   }
   deleteSelectedPaniers() {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete the selected products?',
+      message: 'Are you sure you want to delete the selected paniers?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.paniers = this.paniers.filter(val => !this.selectedPaniers.includes(val));
+        this.paniers.forEach(panier => {
+          this.panierService.deletePanier(panier.id).subscribe(resp => {
+            console.log(resp);
+          });
+        })
         this.selectedPaniers = [];
-
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Paniers Supprimés', life: 3000 });
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Paniers Deleted', life: 3000 });
       }
     });
   }
@@ -89,8 +93,11 @@ export class MesPaniersListComponent implements OnInit {
         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'panier Updated', life: 3000 });
       }
       else {
-        this.panierService.savePanier(this.panier);
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'panier Created', life: 3000 });
+        this.panierService.savePanier(this.panier).subscribe(resp =>{
+          console.log(resp);
+          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'panier Created', life: 3000 });
+        });
+        
       }
 
       this.paniers = [...this.paniers];

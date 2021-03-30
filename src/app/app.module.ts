@@ -68,7 +68,7 @@ import { GeolocalisationPageComponent } from './geolocalisation-page/geolocalisa
     TestComposantComponent,
     MesPaniersListComponent,
     InspirationPageComponent,
-    GeolocalisationPageComponent
+    GeolocalisationPageComponent,
   
 
   ],

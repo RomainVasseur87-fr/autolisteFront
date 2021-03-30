@@ -18,10 +18,7 @@
             <div class="p-d-flex p-ai-center p-jc-between">
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
-                    <!-- fonctionne pas à corriger -->
                     <input pInputText type="text" (input)="filtree($event)" placeholder="Search..." />
-                    <!-- "dt.filterGlobal($event.target.value, 'contains')" -->
-                    <!-- "filtree($event)" -->
                 </span>
             </div>
         </ng-template>
@@ -50,13 +47,13 @@
                 <td>
                     <p-tableCheckbox [value]="panier"></p-tableCheckbox>
                 </td>
-                <td>{{panier.nom}}</td>
+                <td [routerLink]="'/paniers/'+ panier.id">{{panier.nom}}</td>
                 <td *ngIf="panier.id">{{panier.date |date}}</td>
                 <td *ngIf="!panier.id">panier en cours</td>
                 <td>{{panier.produits ? panier.produits.length : 0 | number}}</td>
                 <td>
                     <div *ngFor="let produit of panier.produits">
-                        <app-produit [produit]="produit"></app-produit>
+                        {{produit.nom}}, {{produit.quantite}}
                     </div>
                 </td>
                 <td>
@@ -84,7 +81,7 @@
         <div class="p-formgrid p-grid">
             <div class="p-field p-col">
                 <label for="produits">Produits</label>
-                <!-- INSERER FORMULAIRE INGREDIENTS -->
+                <!-- inserer produit formulaire -->
             </div>
         </div>
     </ng-template>

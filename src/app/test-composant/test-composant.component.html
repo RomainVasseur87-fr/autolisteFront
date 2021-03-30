@@ -19,10 +19,7 @@
             <div class="p-d-flex p-ai-center p-jc-between">
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
-                    <!-- fonctionne pas à corriger -->
                     <input pInputText type="text" (input)="filtree($event)" placeholder="Search..." />
-                    <!-- "dt.filterGlobal($event.target.value, 'contains')" -->
-                    <!-- "filtree($event)" -->
                 </span>
             </div>
         </ng-template>
@@ -79,7 +76,7 @@
     </p-table>
 </div>
 
-<p-dialog [(visible)]="recetteDialog" [style]="{width: '450px'}" header="Nouvelle Recette" [modal]="true" styleClass="p-fluid">
+<p-dialog [(visible)]="recetteDialog" [style]="{width: '550px'}" header="Nouvelle Recette" [modal]="true" styleClass="p-fluid">
     <ng-template pTemplate="content">
 
         <img [src]="'assets/img/recettes/' + recette.image" [alt]="recette.image" class="recette-image" *ngIf="recette.image">
@@ -95,11 +92,27 @@
         </div>
         <div class="p-field">
             <label for="themes">Thèmes</label>
-            <p-dropdown [(ngModel)]="recette.themes" inputId="themes" [options]="statuses" placeholder="Select">
-                <ng-template let-option pTemplate="item">
-                    <span [class]="'recette-badge status-' + option.value">{{option.label}}</span>
+
+            <p-multiSelect [options]="themesDispo" [(ngModel)]="recette.themes" defaultLabel="Select themes" optionLabel="nom" class="multiselect-custom">
+
+                <ng-template let-nom pTemplate="recette.themes">
+                    <div class="theme-item theme-item-nom" *ngFor="let option of recette.themes">
+                        <div>{{option.nom}}</div>
+                    </div>
+                    <div *ngIf="!recette.themes || recette.themes.length === 0" class="theme-placeholder">
+                        Select themes
+                    </div>
                 </ng-template>
-            </p-dropdown>
+                <ng-template let-theme pTemplate="item">
+                    <div class="theme-item">
+                        <div>{{theme.nom}}</div>
+                    </div>
+                </ng-template>
+
+            </p-multiSelect>
+
+
+
         </div>
         <div class="p-formgrid p-grid">
             <div class="p-field p-col">
@@ -121,4 +134,4 @@
     </ng-template>
 </p-dialog>
 
-<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+<p-confirmDialog [style]="{width: '550px'}"></p-confirmDialog>

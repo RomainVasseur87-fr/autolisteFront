@@ -6,6 +6,8 @@ import { Process } from '../models/process';
 import { Recette } from '../models/recette';
 import { Theme } from '../models/theme';
 import { RecetteService } from '../services/recette.service';
+import { ThemeService } from '../services/theme.service';
+import { PartialObserver } from 'rxjs';
 
 @Component({
   selector: 'app-test-composant',
@@ -41,21 +43,22 @@ export class TestComposantComponent implements OnInit {
 
   submitted: boolean = false;
 
-  statuses!: any;
+  themesDispo!: Theme[];
 
-  constructor(private recetteService: RecetteService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
+  constructor(private recetteService: RecetteService,private themeService: ThemeService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
 
   ngOnInit() {
-    this.recetteService.getRecettes().subscribe(data => {
+    this.recetteService.recetteObservable$.subscribe((data) => {
       this.recettes = data;
       this.recettesResult = data;
     });
+    this.recetteService.getRecettes();
 
-    this.statuses = [
-      { label: 'PLAT VEGETARIEN', value: 'plat végétatrien' },
-      { label: 'ENTREE', value: 'enrée' },
-      { label: 'DESERT', value: 'desert' }
-    ];
+    this.themeService.getThemes().subscribe(themesDispo =>{
+      this.themesDispo = themesDispo;
+
+    })
+
   }
 
   openNew() {
@@ -117,12 +120,20 @@ export class TestComposantComponent implements OnInit {
     if (this.recette.nom.trim()) {
       if (this.recette.id) {
         this.recettes[this.findIndexById(this.recette.id.toString())] = this.recette;
-        this.recetteService.updateRecette(this.recette.id, this.recette);
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Recette Updated', life: 3000 });
+        this.recetteService.updateRecette(this.recette.id, this.recette).subscribe(resp=>{
+          console.log(resp);
+          this.recetteService.getRecettes();
+          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Recette Updated', life: 3000 });
+        });
+        
       }
       else {
-        this.recetteService.saveRecette(this.recette);
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Recette Created', life: 3000 });
+        this.recetteService.saveRecette(this.recette).subscribe(resp=>{
+          this.recetteService.getRecettes();
+          console.log(resp);
+          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Recette Created', life: 3000 });
+        });
+        
       }
 
       this.recettes = [...this.recettes];

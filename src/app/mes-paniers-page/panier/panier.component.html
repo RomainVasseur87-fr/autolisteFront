@@ -1,6 +1,11 @@
-<h3>{{panier.nom}}</h3>
-
 <div>
-    <p>id : {{panier.id}}</p>
-    <p>produits: {{panier.produits}}</p>
+    <ul>
+        <li>id: {{panier.id}}</li>
+        <li class="panier-nom">{{panier.nom}}</li>
+        <li class="panier-dates">{{panier.date}}</li>
+        <li>contiens : {{panier.produits.length}} produits</li>
+        <li class="panier-body" *ngFor="let produit of panier.produits">
+            {{produit}}
+        </li>
+    </ul>
 </div>

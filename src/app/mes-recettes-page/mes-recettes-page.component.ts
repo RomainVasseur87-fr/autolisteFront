@@ -14,13 +14,14 @@ export class MesRecettesPageComponent implements OnInit {
   constructor(private recApi: RecetteService) { }
 
   ngOnInit(): void {
-    this.recApi.getRecettes().subscribe((recettes: Recette[])=>{
+    this.recApi.recetteObservable$.subscribe((recettes: Recette[])=>{
       this.recettes = recettes;
       console.log(recettes);
     },
     (err:any)=>{
       console.error(err);
     });
+    this.recApi.getRecettes();
   }
 
 }
