@@ -1,6 +1,6 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Panier } from '../models/panier';
 
@@ -11,10 +11,17 @@ export class PanierService {
 
   readonly route: string = environment.apiUrl + "panier";
 
+  private paniersSuject = new Subject<Panier[]>();
+
+  paniersObservable$ = this.paniersSuject.asObservable();
+
   constructor(private http: HttpClient) { }
 
-  getPaniers() : Observable<Panier[]> {
-    return this.http.get<Panier[]>(this.route, {observe:'body'})
+  getPaniers() :void {
+    this.http.get<Panier[]>(this.route, {observe:'body'})
+    .subscribe((Paniers: Panier[])=>{
+      this.paniersSuject.next(Paniers);
+    })
   };
   getPanier(id:number) : Observable<Panier> {
     return this.http.get<Panier>(`${this.route}/${id}`)

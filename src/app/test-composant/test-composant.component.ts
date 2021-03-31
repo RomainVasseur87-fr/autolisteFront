@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
 import { Produit } from '../models/produit';
@@ -7,7 +7,7 @@ import { Recette } from '../models/recette';
 import { Theme } from '../models/theme';
 import { RecetteService } from '../services/recette.service';
 import { ThemeService } from '../services/theme.service';
-import { PartialObserver } from 'rxjs';
+import { PartialObserver, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-test-composant',
@@ -21,7 +21,7 @@ import { PartialObserver } from 'rxjs';
     `],
   styleUrls: ['./test-composant.component.css']
 })
-export class TestComposantComponent implements OnInit {
+export class TestComposantComponent implements OnInit, OnDestroy {
 
   recetteDialog: boolean = false;
 
@@ -45,20 +45,28 @@ export class TestComposantComponent implements OnInit {
 
   themesDispo!: Theme[];
 
+  subscriptions : Subscription[] = [];
+
   constructor(private recetteService: RecetteService,private themeService: ThemeService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
 
   ngOnInit() {
-    this.recetteService.recetteObservable$.subscribe((data) => {
+    let recettesSub = this.recetteService.recettesObservable$.subscribe((data) => {
       this.recettes = data;
       this.recettesResult = data;
     });
     this.recetteService.getRecettes();
 
-    this.themeService.getThemes().subscribe(themesDispo =>{
+    let themesSub = this.themeService.themesObservable$.subscribe(themesDispo =>{
       this.themesDispo = themesDispo;
+    });
+    this.themeService.getThemes();
+    this.subscriptions.push(recettesSub, themesSub);
+  }
 
+  ngOnDestroy(){
+    this.subscriptions.forEach(sub=>{
+      sub.unsubscribe();
     })
-
   }
 
   openNew() {
@@ -121,8 +129,8 @@ export class TestComposantComponent implements OnInit {
       if (this.recette.id) {
         this.recettes[this.findIndexById(this.recette.id.toString())] = this.recette;
         this.recetteService.updateRecette(this.recette.id, this.recette).subscribe(resp=>{
-          console.log(resp);
           this.recetteService.getRecettes();
+          console.log(resp);
           this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Recette Updated', life: 3000 });
         });
         

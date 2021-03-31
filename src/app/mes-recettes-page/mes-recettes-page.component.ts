@@ -14,7 +14,7 @@ export class MesRecettesPageComponent implements OnInit {
   constructor(private recApi: RecetteService) { }
 
   ngOnInit(): void {
-    this.recApi.recetteObservable$.subscribe((recettes: Recette[])=>{
+    this.recApi.recettesObservable$.subscribe((recettes: Recette[])=>{
       this.recettes = recettes;
       console.log(recettes);
     },

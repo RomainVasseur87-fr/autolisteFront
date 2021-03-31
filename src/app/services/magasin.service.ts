@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Magasin } from '../models/magasin';
 
@@ -11,10 +11,17 @@ export class MagasinService {
 
   readonly route: string = environment.apiUrl + "Magasin";
 
+  private magasinsSubject = new Subject<Magasin[]>();
+
+  magasinsObservable$ = this.magasinsSubject.asObservable();
+
   constructor(private http: HttpClient) { }
 
-  getMagasins() : Observable<Magasin[]> {
-    return this.http.get<Magasin[]>(this.route, {observe:'body'})
+  getMagasins() : void {
+    this.http.get<Magasin[]>(this.route, {observe:'body'})
+    .subscribe((magasins: Magasin[])=>{
+      this.magasinsSubject.next(magasins);
+    })
   };
   getMagasin(id:number) : Observable<Magasin> {
     return this.http.get<Magasin>(`${this.route}/${id}`)

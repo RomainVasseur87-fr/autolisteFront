@@ -11,17 +11,17 @@ export class RecetteService {
 
   readonly route: string = environment.apiUrl + "recette";
 
-  private recetteSubject = new Subject<Recette[]>();
+  private recettesSubject = new Subject<Recette[]>();
 
-  // convention de nomage des Observables (affixé par un $)
-  recetteObservable$ = this.recetteSubject.asObservable();
+  // convention de nommage des Observables (affixé par un $)
+  recettesObservable$ = this.recettesSubject.asObservable();
 
   constructor(private http: HttpClient) { }
 
   getRecettes() : void {
     this.http.get<Recette[]>(this.route, {observe:'body'})
       .subscribe((recettes: Recette[])=>{
-        this.recetteSubject.next(recettes);
+        this.recettesSubject.next(recettes);
       })
   };
   getRecette(id:number) : Observable<Recette> {
@@ -43,7 +43,7 @@ export class RecetteService {
     return this.http.get<Recette[]>(`${this.route}/nb-convives-smaller-than/${id}`)
   };
   getRecettesByProcess(id:number) : Observable<Recette[]> {
-    return this.http.get<Recette[]>(`${this.route}/pocess/${id}`)
+    return this.http.get<Recette[]>(`${this.route}/process/${id}`)
   };
   getRecettesByyheme(id:number) : Observable<Recette[]> {
     return this.http.get<Recette[]>(`${this.route}/theme/${id}`)

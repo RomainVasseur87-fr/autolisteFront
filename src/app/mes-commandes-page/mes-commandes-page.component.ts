@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Commande } from '../models/commande';
 import { CommandeService } from '../services/commande.service';
 
@@ -7,20 +8,28 @@ import { CommandeService } from '../services/commande.service';
   templateUrl: './mes-commandes-page.component.html',
   styleUrls: ['./mes-commandes-page.component.css']
 })
-export class MesCommandesPageComponent implements OnInit {
+export class MesCommandesPageComponent implements OnInit, OnDestroy {
 
   commandes!: Commande[];
+
+  subscriptions : Subscription[] = [];
 
   constructor(private comApi: CommandeService) { }
 
   ngOnInit(): void {
-    this.comApi.getCommandes().subscribe((commandes: Commande[])=>{
+    let commSub = this.comApi.commandesObservable$.subscribe((commandes: Commande[])=>{
       this.commandes = commandes;
-      console.log(commandes);
     },
     (err:any)=>{
       console.error(err);
     });
+    this.comApi.getCommandes();
+    this.subscriptions.push(commSub);
+  }
+  ngOnDestroy(){
+    this.subscriptions.forEach(sub=>{
+      sub.unsubscribe();
+    })
   }
 
 }

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { Subscription } from 'rxjs';
 import { Panier } from 'src/app/models/panier';
 import { PanierService } from 'src/app/services/panier.service';
 
@@ -8,7 +9,7 @@ import { PanierService } from 'src/app/services/panier.service';
   templateUrl: './mes-paniers-list.component.html',
   styleUrls: ['./mes-paniers-list.component.css']
 })
-export class MesPaniersListComponent implements OnInit {
+export class MesPaniersListComponent implements OnInit, OnDestroy {
 
   panierDialog: boolean = false;
 
@@ -23,12 +24,22 @@ export class MesPaniersListComponent implements OnInit {
 
   statuses!:any;
 
+  subscriptions : Subscription[] = [];
+
   constructor(private panierService: PanierService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
-    this.panierService.getPaniers().subscribe(data => {
+    let paniersSub = this.panierService.paniersObservable$.subscribe(data => {
       this.paniers = data;
       this.paniersResult = data;
+    });
+    this.panierService.getPaniers();
+    this.subscriptions.push(paniersSub);
+  }
+
+  ngOnDestroy(){
+    this.subscriptions.forEach(sub=>{
+      sub.unsubscribe();
     })
   }
 
@@ -89,11 +100,16 @@ export class MesPaniersListComponent implements OnInit {
     if (this.panier.nom.trim()) {
       if (this.panier.id) {
         this.paniers[this.findIndexById(this.panier.id.toString())] = this.panier;
-        this.panierService.updatePanier(this.panier.id, this.panier);
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'panier Updated', life: 3000 });
+        this.panierService.updatePanier(this.panier.id, this.panier).subscribe(resp=>{
+          this.panierService.getPaniers();
+          console.log(resp);
+          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'panier Updated', life: 3000 });
+        });
+        
       }
       else {
         this.panierService.savePanier(this.panier).subscribe(resp =>{
+          this.panierService.getPaniers();
           console.log(resp);
           this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'panier Created', life: 3000 });
         });

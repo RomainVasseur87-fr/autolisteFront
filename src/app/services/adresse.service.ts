@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Adresse } from '../models/adresse';
 
@@ -11,10 +11,17 @@ export class AdresseService {
 
   readonly route: string = environment.apiUrl + "adresse";
 
+  private adressesSubject = new Subject<Adresse[]>();
+
+  adressesObservable$ = this.adressesSubject.asObservable();
+
   constructor(private http: HttpClient) { }
 
-  getAdresses() : Observable<Adresse[]> {
-    return this.http.get<Adresse[]>(this.route, {observe:'body'})
+  getAdresses() : void {
+    this.http.get<Adresse[]>(this.route, {observe:'body'})
+    .subscribe((adresses : Adresse[])=>{
+      this.adressesSubject.next(adresses);
+    })
   };
   getAdresse(id:number) : Observable<Adresse> {
     return this.http.get<Adresse>(`${this.route}/${id}`)

@@ -2,10 +2,22 @@
     <ul>
         <li>id: {{recette.id}}</li>
         <li class="recette-nom">{{recette.nom}}</li>
+        <li *ngIf="recette.image"></li>
         <li class="recette-theme" *ngFor="let theme of recette.themes"> themes : {{theme}}</li>
         <li>prévues pour : {{recette.nbConvives}} personnes</li>
         <li class="recette-body" *ngFor="let produit of recette.produits">{{produit}}</li>
         <li class="recette-body">preparations :</li>
         <li class="recette-body">{{recette.process.description}}</li>
     </ul>
+</div>
+
+<div>
+    <p class="titre"> {{recette.nom}}</p>
+</div>
+<div>
+    <p classe="img" *ngIf="recette.image"></p>
+    <p><img [src]="'assets/showcase/images/demo/product/' + recette.image" [alt]="recette.nom" width="100" class="p-shadow-4" /></p>
+</div>
+<div>
+    <p class="recette-theme" *ngFor="let theme of recette.themes"> themes : {{theme}}</p>
 </div>

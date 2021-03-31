@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Article } from '../models/article';
 
@@ -9,12 +9,19 @@ import { Article } from '../models/article';
 })
 export class ArticleService {
 
+  private articlesSubject = new Subject<Article[]>();
+
+  articlesObservable$ = this. articlesSubject.asObservable();
+
   readonly route: string = environment.apiUrl + "article";
 
   constructor(private http: HttpClient) { }
 
-  getArticles() : Observable<Article[]> {
-    return this.http.get<Article[]>(this.route, {observe:'body'})
+  getArticles() : void {
+    this.http.get<Article[]>(this.route, {observe:'body'})
+    .subscribe((articles:Article[])=>{
+      this.articlesSubject.next(articles);
+    })
   };
   getArticle(id:number) : Observable<Article> {
     return this.http.get<Article>(`${this.route}/${id}`)

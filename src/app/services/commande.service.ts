@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Commande } from '../models/commande';
 
@@ -11,10 +11,17 @@ export class CommandeService {
 
   readonly route: string = environment.apiUrl + "Commande";
 
+  private commandesSubject = new Subject<Commande[]>();
+
+  commandesObservable$ = this.commandesSubject.asObservable();
+
   constructor(private http: HttpClient) { }
 
-  getCommandes() : Observable<Commande[]> {
-    return this.http.get<Commande[]>(this.route, {observe:'body'})
+  getCommandes() : void {
+    this.http.get<Commande[]>(this.route, {observe:'body'})
+    .subscribe((commandes: Commande[])=>{
+      this.commandesSubject.next(commandes);
+    })
   };
   getCommande(id:number) : Observable<Commande> {
     return this.http.get<Commande>(`${this.route}/${id}`)
