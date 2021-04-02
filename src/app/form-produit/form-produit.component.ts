@@ -54,17 +54,20 @@ export class FormProduitComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.produitsListe);
-    
+    this.fillForm();
+  }
+
+  private fillForm() {
     let produitFA: FormArray = new FormArray([]);
-    this.produitsListe.forEach(produit => {
-      produitFA.push(new FormGroup({
-        nom: new FormControl(produit.nom),
-        quantite: new FormControl(produit.quantite)
-      }))
-    })
-    this.produitForm.setControl('ingredients', produitFA)
-    console.log(this.produitForm);
+    if(this.produitsListe){
+      this.produitsListe.forEach(produit => {
+        produitFA.push(new FormGroup({
+          nom: new FormControl(produit.nom),
+          quantite: new FormControl(produit.quantite)
+        }));
+      });
+      this.produitForm.setControl('ingredients', produitFA);
+    }
   }
 
   debug(){

@@ -75,7 +75,7 @@
     </p-table>
 </div>
 
-<p-dialog [(visible)]="recetteDialog" [style]="{'height':'700px'}" header="Nouvelle Recette" [modal]="true" styleClass="p-fluid">
+<p-dialog [(visible)]="recetteDialog" (onHide)="hideDialog()" [style]="{'height':'700px'}" header="Nouvelle Recette" [modal]="true" styleClass="p-fluid">
     <ng-template pTemplate="content">
         <!-- 
         <div *ngIf="recette.image">
@@ -130,7 +130,7 @@
         <div>
             <label for="process">Préparation :</label>
             <!-- todo preparation -->
-            <p-editor [(ngModel)]="recette.process.description"></p-editor>
+            <p-editor [(ngModel)]="process.description"></p-editor>
 
         </div>
         <div>

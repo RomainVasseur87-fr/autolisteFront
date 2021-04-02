@@ -1,7 +1,7 @@
 export interface Adresse {
 
-    id?: number,
-    version?: number,
+    id: number,
+    version: number,
     numero: number,
     rue: string,
     complement: string,
