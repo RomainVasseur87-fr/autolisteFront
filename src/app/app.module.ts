@@ -9,7 +9,6 @@ import { HeaderComponent } from './Commons/header/header.component';
 import { FooterComponent } from './Commons/footer/footer.component';
 import { AccueilPageComponent } from './accueil-page/accueil-page.component';
 import { MesRecettesPageComponent } from './mes-recettes-page/mes-recettes-page.component';
-import { MesPaniersPageComponent } from './mes-paniers-page/mes-paniers-page.component';
 import { MesCommandesPageComponent } from './mes-commandes-page/mes-commandes-page.component';
 import { ConnexionPageComponent } from './connexion-page/connexion-page.component';
 import { UtilisateurPageComponent } from './utilisateur-page/utilisateur-page.component';
@@ -41,10 +40,15 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { EditorModule } from 'primeng/editor';
+import { ChipsModule } from 'primeng/chips';
 import { RecetteService } from './services/recette.service';
 import { MesPaniersListComponent } from './mes-paniers-page/mes-paniers-list/mes-paniers-list.component';
 import { InspirationPageComponent } from './inspiration-page/inspiration-page.component';
 import { GeolocalisationPageComponent } from './geolocalisation-page/geolocalisation-page.component';
+import { MesPaniersPageComponent } from './mes-paniers-page/mes-paniers-page.component';
+import { FormProduitComponent } from './form-produit/form-produit.component';
+
 
 
 
@@ -69,6 +73,9 @@ import { GeolocalisationPageComponent } from './geolocalisation-page/geolocalisa
     MesPaniersListComponent,
     InspirationPageComponent,
     GeolocalisationPageComponent,
+    FormProduitComponent,
+
+    
   
 
   ],
@@ -98,6 +105,8 @@ import { GeolocalisationPageComponent } from './geolocalisation-page/geolocalisa
     InputNumberModule,
     ConfirmDialogModule,
     InputTextareaModule,
+    EditorModule,
+    ChipsModule,
 
 
   ],

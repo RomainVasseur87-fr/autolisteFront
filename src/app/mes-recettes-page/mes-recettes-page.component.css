@@ -9,3 +9,15 @@
     margin-top: 2vh;
     cursor: pointer;
 }
+
+.titre {
+    display: block;
+    text-align: center;
+    width: 90vw;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.iconTitre {
+    width: 2%;
+    color: beige;
+}

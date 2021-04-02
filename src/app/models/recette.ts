@@ -4,12 +4,13 @@ import { Theme } from "./theme";
 
 export interface Recette {
     
-    id:number,
-    version:number,
+    id?:number,
+    version?:number,
     nom: string,
     nbConvives:number,
     process: Process,
-    produits:Produit[],
+    ingredients:Produit[],
     themes:Theme[],
     image?: File,
+    rating?:number,
 }

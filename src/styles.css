@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
 :root {
+    font-family: 'Times New Roman', Times, serif;
     --main-bg-color: #2248FF;
 }

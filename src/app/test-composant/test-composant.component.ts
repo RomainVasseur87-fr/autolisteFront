@@ -33,11 +33,21 @@ export class TestComposantComponent implements OnInit, OnDestroy {
     version: 0,
     nom: "",
     nbConvives: 0,
-    process: <Process>{},
-    produits: [],
+    process: <Process>{description:""},
+    ingredients: [{id: 3, version: 0, nom: "Cuillère à soupe Grenadine", quantite: 1, categories: Array(0)}],
     themes: [],
     image: <File>{},
+    rating: 0,
   };
+
+  test: Produit[] = [
+    <Produit>{nom:"poulet"},
+    <Produit>{nom:"poulet"},
+    <Produit>{nom:"poulet"},
+    <Produit>{nom:"poulet"},
+    <Produit>{nom:"poulet"},
+    <Produit>{nom:"poulet"},
+  ];
 
   selectedRecettes!: Recette[];
 
@@ -83,7 +93,7 @@ export class TestComposantComponent implements OnInit, OnDestroy {
       accept: () => {
         this.recettes = this.recettes.filter(val => !this.selectedRecettes.includes(val));
         this.recettes.forEach(recette => {
-          this.recetteService.deleteRecette(recette.id).subscribe(resp => {
+          this.recetteService.deleteRecette(recette.id!).subscribe(resp => {
             console.log(resp);
           });
         })
@@ -95,11 +105,8 @@ export class TestComposantComponent implements OnInit, OnDestroy {
   editRecette(recette: Recette) {
     this.recette = recette;
     this.recetteDialog = true;
-    this.recetteService.updateRecette(this.recette.id, recette).subscribe(resp => {
-      this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Recette mise à jour', life: 3000 });
-      console.log(resp);
-    });
   }
+ 
 
   deleteRecette(recette: Recette) {
     this.confirmationService.confirm({
@@ -109,7 +116,7 @@ export class TestComposantComponent implements OnInit, OnDestroy {
       accept: () => {
         this.recettes = this.recettes.filter(val => val.id !== recette.id);
         this.recette = <Recette>{};
-        this.recetteService.deleteRecette(recette.id).subscribe(resp => {
+        this.recetteService.deleteRecette(recette.id!).subscribe(resp => {
           console.log(resp);
           this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Recette supprimée', life: 3000 });
         });
@@ -152,7 +159,7 @@ export class TestComposantComponent implements OnInit, OnDestroy {
   findIndexById(id: string): number {
     let index = -1;
     for (let i = 0; i < this.recettes.length; i++) {
-      if (this.recettes[i].id.toString() === id) {
+      if (this.recettes[i].id!.toString() === id) {
         index = i;
         break;
       }

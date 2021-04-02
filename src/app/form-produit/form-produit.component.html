@@ -1,0 +1,24 @@
+<form (ngSubmit)="soumettre()" [formGroup]="produitForm" (change)="soumettre()">
+    <div formArrayName="ingredients">
+        <div *ngFor="let produit of ingredients.controls; let i = index">
+            <div [formGroupName]="i">
+                <label>Nom
+                    <input type="text" formControlName ="nom" placeholder="nom" >
+                </label>
+                <label>Quantité
+                    <input type="number" min="0" formControlName = "quantite" placeholder="quantite">
+                </label>
+                <button pButton pRipple type="button" icon="pi pi-times" (click)="removeProduit(i)" class="p-button-rounded p-button-danger p-button-outlined"></button>
+            </div>
+        </div>
+    </div>
+    <!-- 
+    <button type="button" (click)="debug()">poulet</button>
+     -->
+    <div>
+        <button pButton pRipple type="button" icon="pi pi-plus" class="p-button-rounded" (click)="addProduit()"></button>
+        <!-- <button pButton pRipple type="button" type="submit" label="valider" class="p-button-rounded p-button-success"></button> -->
+    </div>
+
+
+</form>

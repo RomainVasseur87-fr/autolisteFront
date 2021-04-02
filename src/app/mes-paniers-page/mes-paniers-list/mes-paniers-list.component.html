@@ -36,8 +36,8 @@
                 <th pSortableColumn="nbProduits">Nombres de produits
                     <p-sortIcon field="nbProduits"></p-sortIcon>
                 </th>
-                <th pSortableColumn="produits">Produits
-                    <p-sortIcon field="produits"></p-sortIcon>
+                <th pSortableColumn="ingredients">Produits
+                    <p-sortIcon field="ingredients"></p-sortIcon>
                 </th>
                 <th></th>
             </tr>
@@ -47,12 +47,12 @@
                 <td>
                     <p-tableCheckbox [value]="panier"></p-tableCheckbox>
                 </td>
-                <td [routerLink]="'/paniers/'+ panier.id">{{panier.nom}}</td>
+                <td class="clickable" routerLink="/mesPaniers/{{panier.id}}">{{panier.nom}}</td>
                 <td *ngIf="panier.id">{{panier.date |date}}</td>
                 <td *ngIf="!panier.id">panier en cours</td>
-                <td>{{panier.produits ? panier.produits.length : 0 | number}}</td>
+                <td>{{panier.ingredients ? panier.ingredients.length : 0 | number}}</td>
                 <td>
-                    <div *ngFor="let produit of panier.produits">
+                    <div *ngFor="let produit of panier.ingredients">
                         {{produit.nom}}, {{produit.quantite}}
                     </div>
                 </td>
@@ -81,7 +81,7 @@
         <div class="p-formgrid p-grid">
             <div class="p-field p-col">
                 <label for="produits">Produits</label>
-                <!-- inserer produit formulaire -->
+                <!--  -->
             </div>
         </div>
     </ng-template>

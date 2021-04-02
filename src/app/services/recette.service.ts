@@ -45,7 +45,7 @@ export class RecetteService {
   getRecettesByProcess(id:number) : Observable<Recette[]> {
     return this.http.get<Recette[]>(`${this.route}/process/${id}`)
   };
-  getRecettesByyheme(id:number) : Observable<Recette[]> {
+  getRecettesByTheme(id:number) : Observable<Recette[]> {
     return this.http.get<Recette[]>(`${this.route}/theme/${id}`)
   };
   saveRecette(recette:Recette): Observable<HttpResponse<Recette>> {

@@ -1,4 +1,7 @@
-<h2>Mes commandes</h2>
+<div class="titre">
+    <h1> <img class="iconTitre" src="../../assets/img/petite_toque.png" alt="petite toque de chef"> Mes commandes <img class="iconTitre" src="../../assets/img/listing.png" alt="listing de courses"></h1>
+</div>
+
 
 <div *ngIf="commandes" class="flex-container">
     <app-commande *ngFor="let commande of commandes" [commande]="commande"></app-commande>

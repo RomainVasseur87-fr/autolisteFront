@@ -56,7 +56,7 @@ export class MesPaniersListComponent implements OnInit, OnDestroy {
       accept: () => {
         this.paniers = this.paniers.filter(val => !this.selectedPaniers.includes(val));
         this.paniers.forEach(panier => {
-          this.panierService.deletePanier(panier.id).subscribe(resp => {
+          this.panierService.deletePanier(panier.id!).subscribe(resp => {
             console.log(resp);
           });
         })
@@ -68,7 +68,7 @@ export class MesPaniersListComponent implements OnInit, OnDestroy {
   editPanier(panier: Panier) {
     this.panier = { ...panier };
     this.panierDialog = true;
-    this.panierService.updatePanier(this.panier.id, panier).subscribe(resp => {
+    this.panierService.updatePanier(this.panier.id!, panier).subscribe(resp => {
       this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Panier mise à jour', life: 3000 });
       console.log(resp);
     });
@@ -81,7 +81,7 @@ export class MesPaniersListComponent implements OnInit, OnDestroy {
       accept: () => {
         this.paniers = this.paniers.filter(val => val.id !== panier.id);
         this.panier = <Panier>{};
-        this.panierService.deletePanier(this.panier.id).subscribe(resp => {
+        this.panierService.deletePanier(this.panier.id!).subscribe(resp => {
           console.log(resp);
           this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Recette supprimée', life: 3000 });
         });
@@ -124,7 +124,7 @@ export class MesPaniersListComponent implements OnInit, OnDestroy {
   findIndexById(id: string): number {
     let index = -1;
     for (let i = 0; i < this.paniers.length; i++) {
-      if (this.paniers[i].id.toString() === id) {
+      if (this.paniers[i].id!.toString() === id) {
         index = i;
         break;
       }
