@@ -8,6 +8,7 @@ import { RecetteService } from '../services/recette.service';
 import { ThemeService } from '../services/theme.service';
 import { Subscription } from 'rxjs';
 import { Process } from '../models/process';
+import { ProcessService } from '../services/process.service';
 
 @Component({
   selector: 'app-test-composant',
@@ -48,9 +49,11 @@ export class TestComposantComponent implements OnInit, OnDestroy {
 
   themesDispo!: Theme[];
 
+  processesDispo!: Process[];
+
   subscriptions : Subscription[] = [];
 
-  constructor(private recetteService: RecetteService,private themeService: ThemeService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
+  constructor(private recetteService: RecetteService,private themeService: ThemeService, private messageService: MessageService, private confirmationService: ConfirmationService, private processService: ProcessService) { }
 
   ngOnInit() {
     let recettesSub = this.recetteService.recettesObservable$.subscribe((data) => {
@@ -63,7 +66,13 @@ export class TestComposantComponent implements OnInit, OnDestroy {
       this.themesDispo = themesDispo;
     });
     this.themeService.getThemes();
-    this.subscriptions.push(recettesSub, themesSub);
+
+    let processesSub = this.processService.processesObservable$.subscribe(processes =>{
+      this.processesDispo = processes;
+    });
+    this.processService.getProcesses();
+
+    this.subscriptions.push(recettesSub, themesSub,processesSub);
   }
 
   ngOnDestroy(){
@@ -126,10 +135,14 @@ export class TestComposantComponent implements OnInit, OnDestroy {
   }
   saveRecette() {
     this.submitted = true;
+    console.log(this.recette.process, this.process);
+    this.recette.process = this.process;
+    this.saveProcess();
 
     if (this.recette.nom.trim()) {
       if (this.recette.id) {
-        this.recettes[this.findIndexById(this.recette.id.toString())] = this.recette;
+        
+        // this.recettes[this.findIndexById(this.recette.id.toString())] = this.recette;
         this.recetteService.updateRecette(this.recette.id, this.recette).subscribe(resp=>{
           this.recetteService.getRecettes();
           console.log(resp);
@@ -151,6 +164,29 @@ export class TestComposantComponent implements OnInit, OnDestroy {
       this.recette = <Recette>{};
     }
   }
+
+  saveProcess(){
+    if (this.process.id) {
+      this.processService.updateProcess(this.process.id, this.process).subscribe(resp=>{
+        this.processService.getProcesses();
+        this.recette.process = resp;
+        console.log(resp);
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'process Updated', life: 3000 });
+      });
+      
+    }
+    else {
+      this.processService.saveProcess(this.process).subscribe(resp=>{
+        this.processService.getProcesses();
+        this.recette.process = resp;
+        console.log(resp);
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'process Created', life: 3000 });
+      });
+      
+    }
+
+  }
+
   findIndexById(id: string): number {
     let index = -1;
     for (let i = 0; i < this.recettes.length; i++) {
