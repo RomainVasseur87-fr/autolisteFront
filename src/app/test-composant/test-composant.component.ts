@@ -89,8 +89,8 @@ export class TestComposantComponent implements OnInit, OnDestroy {
 
   deleteSelectedRecettes() {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete the selected products?',
-      header: 'Confirm',
+      message: 'êtes-vous sûr de vouloir supprimer les recettes selectionnées?',
+      header: 'Confirmer',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.recettes = this.recettes.filter(val => !this.selectedRecettes.includes(val));
@@ -113,15 +113,15 @@ export class TestComposantComponent implements OnInit, OnDestroy {
 
   deleteRecette(recette: Recette) {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete ' + recette.nom + '?',
-      header: 'Confirm',
+      message: 'êtes-vous sûr de vouloir supprimer ' + '"' + recette.nom + '"' + '?',
+      header: 'Confirmer',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.recettes = this.recettes.filter(val => val.id !== recette.id);
         this.recette = <Recette>{};
         this.recetteService.deleteRecette(recette.id).subscribe(resp => {
           console.log(resp);
-          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Recette supprimée', life: 3000 });
+          this.messageService.add({ severity: 'reussite', summary: 'Reussite', detail: 'Recette supprimée', life: 3000 });
         });
 
       }
@@ -146,7 +146,7 @@ export class TestComposantComponent implements OnInit, OnDestroy {
         this.recetteService.updateRecette(this.recette.id, this.recette).subscribe(resp=>{
           this.recetteService.getRecettes();
           console.log(resp);
-          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Recette Updated', life: 3000 });
+          this.messageService.add({ severity: 'reussite', summary: 'Reussite', detail: 'Recette mise à jour', life: 3000 });
         });
         
       }
@@ -154,7 +154,7 @@ export class TestComposantComponent implements OnInit, OnDestroy {
         this.recetteService.saveRecette(this.recette).subscribe(resp=>{
           this.recetteService.getRecettes();
           console.log(resp);
-          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Recette Created', life: 3000 });
+          this.messageService.add({ severity: 'reussite', summary: 'Reussite', detail: 'Creation de la recette reussie', life: 3000 });
         });
         
       }
@@ -171,7 +171,7 @@ export class TestComposantComponent implements OnInit, OnDestroy {
         this.processService.getProcesses();
         this.recette.process = resp;
         console.log(resp);
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'process Updated', life: 3000 });
+        this.messageService.add({ severity: 'reussite', summary: 'Reussite', detail: 'La description a été mise à jour', life: 3000 });
       });
       
     }
@@ -180,7 +180,7 @@ export class TestComposantComponent implements OnInit, OnDestroy {
         this.processService.getProcesses();
         this.recette.process = resp;
         console.log(resp);
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'process Created', life: 3000 });
+        this.messageService.add({ severity: 'reussite', summary: 'Reussite', detail: 'La description a été enregistrée', life: 3000 });
       });
       
     }

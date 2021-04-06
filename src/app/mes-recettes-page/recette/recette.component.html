@@ -3,9 +3,9 @@
         <li>id: {{recette.id}}</li>
         <li class="recette-nom">{{recette.nom}}</li>
         <li *ngIf="recette.image"></li>
-        <li class="recette-theme" *ngFor="let theme of recette.themes"> themes : {{theme}}</li>
+        <li class="recette-theme" *ngFor="let theme of recette.themes"> themes : {{theme.nom}}</li>
         <li>prévues pour : {{recette.nbConvives}} personnes</li>
-        <li class="recette-body" *ngFor="let produit of recette.ingredients">{{produit}}</li>
+        <li class="recette-body" *ngFor="let produit of recette.ingredients">{{produit.nom}}{{produit.quantite}}</li>
         <li class="recette-body">preparations :</li>
         <li class="recette-body">{{recette.process.description}}</li>
     </ul>
@@ -19,7 +19,7 @@
     <p><img [src]="'assets/showcase/images/demo/product/' + recette.image" [alt]="recette.nom" width="100" class="p-shadow-4" /></p>
 </div>
 <div>
-    <p class="recette-theme" *ngFor="let theme of recette.themes"> themes : {{theme}}</p>
+    <p class="recette-theme" *ngFor="let theme of recette.themes"> themes : {{theme.nom}}</p>
 </div>
 <div>
     <button pButton pRipple type="button" label="Retour" routerLink="/mesRecettes" class="p-button-rounded p-button-secondary"></button>
