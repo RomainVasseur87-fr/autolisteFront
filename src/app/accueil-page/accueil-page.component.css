@@ -3,6 +3,7 @@
     text-align: center;
     width: 90vw;
     font-family: 'Times New Roman', Times, serif;
+    z-index: 1;
 }
 
 .iconTitre {
