@@ -1,25 +1,24 @@
-<div>
-    <ul>
-        <li>id: {{recette.id}}</li>
-        <li class="recette-nom">{{recette.nom}}</li>
-        <li *ngIf="recette.image"></li>
-        <li class="recette-theme" *ngFor="let theme of recette.themes"> themes : {{theme.nom}}</li>
-        <li>prévues pour : {{recette.nbConvives}} personnes</li>
-        <li class="recette-body" *ngFor="let produit of recette.ingredients">{{produit.nom}}{{produit.quantite}}</li>
-        <li class="recette-body">preparations :</li>
-        <li class="recette-body">{{recette.process.description}}</li>
-    </ul>
-</div>
-
-<div>
+<div *ngIf="recette.nom">
     <p class="titre"> {{recette.nom}}</p>
 </div>
 <div>
-    <p classe="img" *ngIf="recette.image"></p>
+    <p>id de la recette : {{recette.id}}</p>
+</div>
+<div classe="img" *ngIf="recette.image">
     <p><img [src]="'assets/showcase/images/demo/product/' + recette.image" [alt]="recette.nom" width="100" class="p-shadow-4" /></p>
 </div>
 <div>
-    <p class="recette-theme" *ngFor="let theme of recette.themes"> themes : {{theme.nom}}</p>
+    <p> prévues pour : {{recette.nbConvives}} personnes</p>
+</div>
+<div *ngFor="let theme of recette.themes">
+    <p class="recette-theme"> themes : {{theme.nom}}</p>
+</div>
+<div *ngFor="let produit of recette.ingredients">
+    <p>{{produit.nom}} , {{produit.quantite}}</p>
+</div>
+<div>
+    <p class="recette-body">preparations :</p>
+    <p [innerHtml]="recette.process.description"></p>
 </div>
 <div>
     <button pButton pRipple type="button" label="Retour" routerLink="/mesRecettes" class="p-button-rounded p-button-secondary"></button>
